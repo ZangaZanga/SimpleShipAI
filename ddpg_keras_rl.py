@@ -1,10 +1,19 @@
 import numpy as np
 import pickle
 import os
+
 os.environ["CUDA_VISIBLE_DEVICES"]="-1" #comment this line if you want to use cuda
+
+import tensorflow as tf
+from tensorflow import keras
+#from tensorflow.keras import layers
+
 from keras.models import Sequential, Model
+
 from keras.layers import Dense, Activation, Flatten, Input, Concatenate
-from keras.optimizers import Adam
+#from tensorflow.keras.optimizers import Adam
+#from keras.optimizers import Adam
+from keras.optimizers import adam_v2
 
 from rl.agents import DDPGAgent
 from rl.memory import SequentialMemory
@@ -51,7 +60,7 @@ random_process = OrnsteinUhlenbeckProcess(size=nb_actions, theta=0.6, mu=0, sigm
 agent = DDPGAgent(nb_actions=nb_actions, actor=actor, critic=critic, critic_action_input=action_input,
                   memory=memory, nb_steps_warmup_critic=2000, nb_steps_warmup_actor=10000,
                   random_process=random_process, gamma=.99, target_model_update=1e-3)
-agent.compile(Adam(lr=0.001,  clipnorm=1.), metrics=['mae'])
+agent.compile(adam_v2.Adam(lr=0.001,  clipnorm=1.), metrics=['mae'])
 
 # Okay, now it's time to learn something!
 mode = 'test'

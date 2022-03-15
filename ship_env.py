@@ -1,11 +1,11 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-from gym import Env, spaces
 import numpy as np
 from shapely.geometry import LineString, Point
 from viewer import Viewer
 from simulator_simple import Simulator
+from gym import Env, spaces
 
 
 class ShipEnv(Env):
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     mode = 'normal'
     if mode == 'normal':
         env = ShipEnv()
-        for i_episode in range(10):
+        for i_episode in range(100):
             observation = env.reset()
             for t in range(10000):
                 env.render()
